@@ -10,6 +10,18 @@ RUN wget -qO pandoc.tar.gz https://github.com/jgm/pandoc/releases/download/${PAN
  && rm pandoc.tar.gz
 
 
+FROM bash:5 AS terraform-docs-downloader
+
+ARG TERRAFORM_DOCS_VERSION=0.16.0
+ARG TERRAFORM_DOCS_CHECKSUM=328c16cd6552b3b5c4686b8d945a2e2e18d2b8145b6b66129cd5491840010182
+
+WORKDIR /workspace
+RUN wget -qO terraform-docs.tar.gz https://github.com/terraform-docs/terraform-docs/releases/download/v${TERRAFORM_DOCS_VERSION}/terraform-docs-v${TERRAFORM_DOCS_VERSION}-linux-amd64.tar.gz \
+ && echo "${TERRAFORM_DOCS_CHECKSUM}  terraform-docs.tar.gz" | sha256sum -sc \
+ && tar --no-same-owner -xzf terraform-docs.tar.gz \
+ && rm terraform-docs.tar.gz
+
+
 FROM docker.io/antora/antora:3.0.1
 
 RUN yarn global add \
@@ -18,3 +30,4 @@ RUN yarn global add \
 RUN apk --no-cache add \
     	make
 COPY --from=pandoc-downloader /workspace/bin/pandoc /usr/local/bin/
+COPY --from=terraform-docs-downloader /workspace/terraform-docs /usr/local/bin/
