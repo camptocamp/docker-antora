@@ -12,9 +12,9 @@ This image is used by our workflow in the main repository to generate the docume
 The following command allows you to generate the documentation pages:
 
 [source,bash]
-====
+----
 docker run --rm -it --user $(id -u) -v $(pwd):/tmp/devops-stack -e FORCE_SHOW_EDIT_PAGE_LINK=true -e CI=true camptocamp/antora:3.1.0 generate /tmp/devops-stack/antora-playbook.yml --to-dir /tmp/devops-stack/docs_test --cache-dir=/tmp/.cache
-====
+----
 
 [IMPORTANT]
 ====
