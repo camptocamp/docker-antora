@@ -6,14 +6,14 @@ on:
 
 jobs:
   commits_checks:
-    name: "Commits checks"
+    name: "Check commit messages"
     runs-on: "ubuntu-latest"
 
     steps:
-      - name: "Check out repository"
-        uses: "actions/checkout@v2"
+      - name: "Checkout the repository"
+        uses: actions/checkout@v3
         with:
-          fetch-depth: 0
+          fetch-depth: 0 # Fetch all history for all tags and branches
 
       - name: "Check commit messages"
         uses: "docker://aevea/commitsar"
