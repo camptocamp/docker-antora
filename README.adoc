@@ -1,0 +1,24 @@
+= Antora Docs Package
+
+Antora is a modular static site generator for creating documentation sites from AsciiDoc. This repository contains a simple Dockerfile to extend the https://hub.docker.com/r/antora/antora[official base Docker image] for using Antora to generate the documentation pages of the https://devops-stack.io[DevOps Stack].
+
+We extend the base image by adding two extensions:
+
+- https://www.npmjs.com/package/@antora/lunr-extension[Antora Lunr Extension] - an extension to add a full-text search powered by https://lunrjs.com/[Lunr] to navigate the documentation pages.
+- https://www.npmjs.com/package/asciidoctor-kroki[Asciidoctor Kroki Extension] - an extension for Asciidoctor.js to convert diagrams to images using https://kroki.io/[Kroki].
+
+This image is used by our workflow in the main repository to generate the documentation pages. You can also use it locally to preview documentation pages while writing them.
+
+The following command allows you to generate the documentation pages:
+
+[source,bash]
+====
+docker run --rm -it --user $(id -u) -v $(pwd):/tmp/devops-stack -e FORCE_SHOW_EDIT_PAGE_LINK=true -e CI=true camptocamp/antora:3.1.0 generate /tmp/devops-stack/antora-playbook.yml --to-dir /tmp/devops-stack/docs_test --cache-dir=/tmp/.cache
+====
+
+[IMPORTANT]
+====
+This command needs to be run from the location where you have locally stored the main DevOps Stack repository, since that is where we store the `antora-playbook.yml` file and the main `docs` folder.
+
+You can run it from elsewhere as long as you replace `$(pwd)` and explicitly point to the DevOps Stack folder.
+====
