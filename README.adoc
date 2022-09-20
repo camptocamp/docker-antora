@@ -20,5 +20,5 @@ docker run --rm -it --user $(id -u) -v $(pwd):/tmp/devops-stack -e FORCE_SHOW_ED
 ====
 This command needs to be run from the location where you have locally stored the main DevOps Stack repository, since that is where we store the `antora-playbook.yml` file and the main `docs` folder.
 
-You can run it from elsewhere as long as you replace `$(pwd)` and explicitly point to the DevOps Stack folder.
+You can run it from elsewhere as long as you replace `$(pwd)` and explicitly point to where you stored the DevOps Stack folder.
 ====
