@@ -25,6 +25,8 @@ jobs:
 
         tags: |
           type=semver, pattern=v{{ version }}
+          type=semver, pattern=v{{ major }}.{{ minor }}
+          type=semver, pattern=v{{ major }}
 
     - name: "Log in to GitHub container registry"
       if: github.event_name == 'push' && github.ref_type == 'tag' # Only login if we push a tag
